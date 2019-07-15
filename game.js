@@ -13,6 +13,7 @@ function init(){
 function animate(){
     towerGame.run();
     window.requestAnimationFrame(animate);
+
 }
 
 class Game{
@@ -50,6 +51,10 @@ class Game{
         for(let i=0;i<this.towers.length;i++){
             this.towers[i].run();
         }
+        for(let i=0; i<this.bullets.length;i++){
+            this.bullets[i].run();
+        }
+       
 
     }
     render(){
@@ -134,7 +139,7 @@ class Game{
          towerGame.createTower(this);
          towerGame.placingTower=true;
         }
-        console.log(this.towers.length);
+        
     }
     createTower(mtd){
         var tower=new Tower(mtd.cost,mtd.cnvTowerImg,mtd.cnvBulletImg);
@@ -144,7 +149,7 @@ class Game{
         else{
             console.log('Failed to create tower');
         }
-        console.log(this.towers.length);
+
         }
          
 

@@ -8,14 +8,35 @@ class Tower{
         this.towAngle=0;
         this.visible=false;
         this.lastTime=Date.now();
-        this.coolDown=1000;
+        this.coolDown=500;
+       
     }
 
     run(){
       this.update();
-      this.render();  
+      this.checkFire();  
+      this.render();
     }
     update(){
+        let dx=this.loc.x-towerGame.cnv.mouseX;
+        let dy=this.loc.y-towerGame.cnv.mouseY;
+        this.towAngle=Math.atan2(dy,dx)-Math.PI;
+    }
+    checkFire(){
+        let dx=this.loc.x-towerGame.cnv.mouseX;
+        let dy=this.loc.y-towerGame.cnv.mouseY;
+        let dist=Math.sqrt(dx*dx+dy*dy);
+        let currentTime=Date.now();
+        console.log(currentTime-this.lastTime);
+
+        if(dist<250 && this.placed && (currentTime-this.lastTime)>this.coolDown){
+            this.lastTime=currentTime;
+            var bulletLocation= vector2d(this.loc.x,this.loc.y);
+            var bullet=new Bullet(bulletLocation,this.towAngle,this.bulletImage);
+            towerGame.bullets.push(bullet);
+            bullet.visible=true;
+
+        }
     }
     render(){
         var ctx= towerGame.context;
